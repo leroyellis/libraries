@@ -6,18 +6,13 @@ abstract class RESTService
 	protected $verb = "";
 	protected $args = Array();
 	protected $file = Null;
-	protected $status = array(  
-		        200 => 'OK',
-		        404 => 'Not Found',   
-		        405 => 'Method Not Allowed',
-		        500 => 'Internal Server Error',
-		    ); 
 
 	public function __construct($request)
 	{
 		header( "Access-Control-Allow-Orgin: *" );
 		header( "Access-Control-Allow-Methods: *" );
 		header( "Content-Type: application/json" );
+		header( "Custom: Tests" );
 		
 		$this->args = explode( '/', rtrim( $request, '/' ) );
 		$this->endpoint = array_shift( $this->args );
@@ -97,7 +92,13 @@ abstract class RESTService
 	
 	private function _requestStatus($code)
 	{
-	    return ($this->$status[$code])?$this->$status[$code]:$this->$status[500]; 
+		$status = array(  
+	        200 => 'OK',
+	        404 => 'Not Found',   
+	        405 => 'Method Not Allowed',
+	        500 => 'Internal Server Error',
+	    ); 
+	    return ($status[$code])?$status[$code]:$status[500]; 
 	}
 
 };
